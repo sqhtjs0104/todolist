@@ -26,7 +26,7 @@ const TodoItem = styled.li`
 		border-radius: 5px;
 
 		transition: all 0.4s;
-		
+
 		&:hover {
 			cursor: pointer;
 			background-color: #edf8e6;

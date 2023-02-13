@@ -140,22 +140,6 @@ const App = memo(() => {
     setNewTodoValue(e.currentTarget.value);
   }, []);
 
-  const onTodoChange = useCallback(e => {
-    const id = parseInt(e.currentTarget.dataset.id);
-
-    setTodos(state => {
-      const temp = cloneDeep(state);
-      const item = remove(temp, {id: id})[0];
-      item.checked = !item.checked;
-      temp.unshift(item);
-      return temp;
-    });
-  }, []);
-  
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
-
   return (
     <Main>
       <h1 className='title'>To Do List</h1>
@@ -168,16 +152,13 @@ const App = memo(() => {
         <ul className='processingList'> {/** 중단 현재 Todo list 영역 */}
           {
             todos.map((v, i) => {
-              if (!v.checked) {
-                return (
-                  <Todo
-                    key={i}
-                    content={v.content}
-                    id={v.id}
-                    onTodoChange={onTodoChange}
-                  />
-                )
-              } else return '';
+              return (
+                <Todo
+                  key={i}
+                  content={v.content}
+                  id={v.id}
+                />
+              )
             })
           }
         </ul>
