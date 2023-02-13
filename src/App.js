@@ -1,5 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { cloneDeep, remove, find } from 'lodash';
 
 import Todo from './components/Todo';
 
@@ -62,22 +63,10 @@ const Main = styled.div`
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-  }
-  
-  fieldset {
-    border: 2px solid #555;
-    border-radius: 10px;
-    height: 45%;
-
-    legend {
-      font-size: 16px;
-      padding: 0px 5px;
-      color: #333;
-    }
 
     ul {
-      padding: 10px;
       margin: 0;
+      padding: 10px;
       list-style: none;
       display: block;
       width: 100%;
@@ -104,37 +93,94 @@ const Main = styled.div`
       }
     }
   }
-`
+`;
+
+const test = [
+  {
+    id: 1,
+    content: "안녕하세요 1",
+    checked: false,
+  },
+  {
+    id: 2,
+    content: "안녕하세요 2",
+    checked: false,
+  },
+  {
+    id: 3,
+    content: "안녕하세요 3",
+    checked: true,
+  },
+  {
+    id: 4,
+    content: "안녕하세요 4",
+    checked: false,
+  },
+  {
+    id: 5,
+    content: "안녕하세요 5",
+    checked: true,
+  },
+]
 
 const App = memo(() => {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const temp = [];
+    for (let i = test.length - 1; i >= 0; i--) {
+      temp.push(test[i]);
+    }
+    setTodos(temp);
+  }, []);
+  
+  const [newTodoValue, setNewTodoValue] = useState(null);
+
+  const onNewTodoChange = useCallback(e => {
+    setNewTodoValue(e.currentTarget.value);
+  }, []);
+
+  const onTodoChange = useCallback(e => {
+    const id = parseInt(e.currentTarget.dataset.id);
+
+    setTodos(state => {
+      const temp = cloneDeep(state);
+      const item = remove(temp, {id: id})[0];
+      item.checked = !item.checked;
+      temp.unshift(item);
+      return temp;
+    });
+  }, []);
+  
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
+
   return (
     <Main>
       <h1 className='title'>To Do List</h1>
       <div className='adding'> {/** 상단 제어 영역 */}
-        <input type="text" />
+        <input type="text" id='newTodo' onChange={onNewTodoChange} />
         <button>Add</button>
       </div>
 
       <div className='list'>
-        <fieldset className='processing'>
-          <legend>Processing</legend>
-          <ul id='processingList'> {/** 중단 현재 Todo list 영역 */}
-            <Todo number={1} />
-            <Todo number={2} />
-            <Todo number={3} />
-            <Todo number={4} />
-            <Todo number={5} />
-            <Todo number={6} />
-            <Todo number={7} />
-            <Todo number={8} />
-            <Todo number={9} />
-          </ul>
-        </fieldset>
-        <fieldset className='completed'>
-          <legend>Completed</legend>
-          <ul id='completedList'> {/** 하단 완료한 Todo list 영역 */}
-          </ul>
-        </fieldset>
+        <ul className='processingList'> {/** 중단 현재 Todo list 영역 */}
+          {
+            todos.map((v, i) => {
+              if (!v.checked) {
+                return (
+                  <Todo
+                    key={i}
+                    content={v.content}
+                    id={v.id}
+                    onTodoChange={onTodoChange}
+                  />
+                )
+              } else return '';
+            })
+          }
+        </ul>
       </div>
     </Main>
   );

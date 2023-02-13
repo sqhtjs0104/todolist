@@ -6,4 +6,4 @@ Side project - To do list
 ## Libraries
 - styled-component
 - sass
-
+- lodash

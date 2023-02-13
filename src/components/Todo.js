@@ -5,96 +5,82 @@ const TodoItem = styled.li`
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
+	padding: 8px 2px;
+	border-bottom: 1px solid #aaa;
 
-	transition: all 0.5s;
-  animation: appear 0.6s ease-in-out;
+  animation: appear 0.3s ease-in-out;
   @keyframes appear {
     0% {
-      scale: 0.7;
-    }
-    50% {
-      scale: 1.05;
+      transform: translate(0, 10px);
+			opacity: 0.8;
     }
     100% {
-      scale: 1;
+      transform: translate(0, 0);
+			opacity: 1;
     }
   }
 
-	input[type="checkbox"] {
-		display: none;
-	}
-
-	label {
-		display: inline-block;
-		width: 20px;
-		height: 20px;
-		border: 1px solid #000;
-		border-radius: 5px;
-		background-color: #fff;
-		color: white;
-		transition: all 0.5s;
-		box-sizing: border-box;
-		margin-right: 10px;
-		text-align: center;
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
-	input[type="checkbox"]:checked + label {
-		background-color: #5a5ada;
-	}
-
 	span {
-		margin-right: 5px;
-		font-size: 20px;
-		transition: all 0.5s;
-
-		display: block;
-		width: 100%;
+		flex: 1;
+		padding: 6px 2px 6px 8px;
 		border-radius: 5px;
-		padding: 0 5px;
 
+		transition: all 0.4s;
+		
 		&:hover {
 			cursor: pointer;
-			background-color: #89cf89;
+			background-color: #edf8e6;
+		}
+
+		&:active {
+			background-color: #adb9ad;
 		}
 	}
 
-	input[type="checkbox"]:checked + label + span {
-		text-decoration: line-through;
-		color: #333;
+	button {
+		width: 25px;
+		height: 25px;
+		font-size: 12px;
+		border: none;
+		border-radius: 50%;
+		margin-left: 5px;
+		color: #fff;
+
+		transition: all 0.2s;
 
 		&:hover {
-			background-color: #aaa;
+			cursor: pointer;
+			scale: 1.1;
+		}
+
+		&:active {
+			scale: 1;
+		}
+
+		&:first-of-type {
+      background-color: #cdcdf5;
+
+      &:active {
+        background-color: #7c7cf0;
+      }
+		}
+
+		&:last-of-type {
+      background-color: #fa9f9f;
+
+      &:active {
+      	background-color: #eb5858;
+      }
 		}
 	}
 `
 
 const Todo = memo(props => {
-	const onTodoChange = useCallback(e => {
-		const todo = document.querySelector(`#todo${props.number}`);
-		const isChecked = e.currentTarget.checked;
-		console.log(isChecked);
-
-		let parent = null;
-		if (isChecked) {
-			parent = document.querySelector('#completedList');
-			parent.appendChild(todo);
-		} else {
-			parent = document.querySelector('#processingList');
-			parent.appendChild(todo);
-		}
-
-		console.log(parent);
-	}, []);
-
 	return (
-		<TodoItem id={`todo${props.number}`}>
-			<input id={`todoCheck${props.number}`} type="checkbox" onChange={onTodoChange} />
-			<label htmlFor={`todoCheck${props.number}`}>V</label>
-			<span>Hello</span>
+		<TodoItem>
+			<span>{props.content}</span>
+			<button>V</button>
+			<button>X</button>
 		</TodoItem>
 	);
 });
