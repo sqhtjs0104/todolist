@@ -6,6 +6,20 @@ const TodoItem = styled.li`
 	flex-flow: row nowrap;
 	align-items: center;
 
+	transition: all 0.5s;
+  animation: appear 0.6s ease-in-out;
+  @keyframes appear {
+    0% {
+      scale: 0.7;
+    }
+    50% {
+      scale: 1.05;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+
 	input[type="checkbox"] {
 		display: none;
 	}
@@ -35,20 +49,50 @@ const TodoItem = styled.li`
 	span {
 		margin-right: 5px;
 		font-size: 20px;
-		color: green;
 		transition: all 0.5s;
+
+		display: block;
+		width: 100%;
+		border-radius: 5px;
+		padding: 0 5px;
+
+		&:hover {
+			cursor: pointer;
+			background-color: #89cf89;
+		}
 	}
 
 	input[type="checkbox"]:checked + label + span {
 		text-decoration: line-through;
 		color: #333;
+
+		&:hover {
+			background-color: #aaa;
+		}
 	}
 `
 
 const Todo = memo(props => {
+	const onTodoChange = useCallback(e => {
+		const todo = document.querySelector(`#todo${props.number}`);
+		const isChecked = e.currentTarget.checked;
+		console.log(isChecked);
+
+		let parent = null;
+		if (isChecked) {
+			parent = document.querySelector('#completedList');
+			parent.appendChild(todo);
+		} else {
+			parent = document.querySelector('#processingList');
+			parent.appendChild(todo);
+		}
+
+		console.log(parent);
+	}, []);
+
 	return (
-		<TodoItem>
-			<input id={`todoCheck${props.number}`} type="checkbox" />
+		<TodoItem id={`todo${props.number}`}>
+			<input id={`todoCheck${props.number}`} type="checkbox" onChange={onTodoChange} />
 			<label htmlFor={`todoCheck${props.number}`}>V</label>
 			<span>Hello</span>
 		</TodoItem>

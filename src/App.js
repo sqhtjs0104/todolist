@@ -4,26 +4,24 @@ import styled from 'styled-components';
 import Todo from './components/Todo';
 
 const Main = styled.div`
-  width: 100%;
-  height: 100%;
-
-  padding: 10px;
-  box-sizing: border-box;
-
   display: flex;
   flex-flow: column nowrap;
+  width: 100%;
+  height: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
 
   .title {
     font-size: 30px;
-    margin: auto;
+    margin: 0 auto 10px;
   }
 
   .adding {
-    width: 100%;
     padding: 10px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    box-sizing: border-box;
 
     * {
       border-radius: 5px;
@@ -34,6 +32,7 @@ const Main = styled.div`
     input {
       margin-right: 10px;
       border: 2px solid #000;
+      flex: 1;
     }
 
     button {
@@ -54,11 +53,21 @@ const Main = styled.div`
       }
     }
   }
+
+  .list {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+  }
   
   fieldset {
     border: 2px solid #555;
     border-radius: 10px;
-    margin-top: 10px;
+    height: 45%;
 
     legend {
       font-size: 16px;
@@ -70,17 +79,30 @@ const Main = styled.div`
       padding: 10px;
       margin: 0;
       list-style: none;
+      display: block;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+
+      overflow-y: auto;
+
+      ::-webkit-scrollbar {
+        width: 20px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #a5a5a5;
+        background-clip: padding-box;
+        border: 8px solid #ffffff00;
+        border-radius: 20px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: none;
+      }
 
       li {
         margin-bottom: 5px;
       }
     }
-  }
-
-  .processing {
-  }
-
-  .completed {
   }
 `
 
@@ -93,20 +115,24 @@ const App = memo(() => {
         <button>Add</button>
       </div>
 
-      <div>
+      <div className='list'>
         <fieldset className='processing'>
           <legend>Processing</legend>
-          <ul> {/** 중단 현재 Todo list 영역 */}
+          <ul id='processingList'> {/** 중단 현재 Todo list 영역 */}
             <Todo number={1} />
             <Todo number={2} />
             <Todo number={3} />
+            <Todo number={4} />
+            <Todo number={5} />
+            <Todo number={6} />
+            <Todo number={7} />
+            <Todo number={8} />
+            <Todo number={9} />
           </ul>
         </fieldset>
         <fieldset className='completed'>
           <legend>Completed</legend>
-          <ul> {/** 하단 완료한 Todo list 영역 */}
-            <Todo number={4} />
-            <Todo number={5} />
+          <ul id='completedList'> {/** 하단 완료한 Todo list 영역 */}
           </ul>
         </fieldset>
       </div>
