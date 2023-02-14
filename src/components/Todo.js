@@ -1,8 +1,8 @@
 import React, { memo, useCallback } from 'react';
 import styled from 'styled-components';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faArrowRotateLeft, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faArrowRotateLeft, faXmark, faBell } from '@fortawesome/free-solid-svg-icons';
+import dayjs from 'dayjs';
 
 const TodoItem = styled.li`
 	display: flex;
@@ -84,8 +84,11 @@ const TodoItem = styled.li`
       }
 		}
 	}
-`
 
+	.shakeBell {
+		animation-iteration-count: 1;
+	}
+`
 const Todo = memo(props => {
 	const onTodoClick = useCallback(e => {
 		props.setNowTodoIndex(e.currentTarget.dataset.index);
@@ -104,6 +107,17 @@ const Todo = memo(props => {
 					</>
 				) : (
 					<>
+						{
+							dayjs().isAfter(dayjs(props.deadline).subtract(3, 'day')) ? (
+								dayjs().isAfter(props.deadline) ? (
+									<FontAwesomeIcon icon={faBell} color='#aaa' />
+								) : (
+									<FontAwesomeIcon icon={faBell} shake className='shakeBell' color='#f38b8b' />
+								)
+							) : (
+								<></>
+							)
+						}
 						<span data-index={props.index} onClick={onTodoClick}>{props.title}</span>
 						<button data-index={props.index} onClick={props.complete}>
 							<FontAwesomeIcon icon={faCheck} />

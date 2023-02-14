@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { cloneDeep, remove, find } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import dayjs from 'dayjs';
 
 import Todo from './components/Todo';
 import TodoModal from './components/TodoModal';
@@ -114,13 +113,13 @@ const test = [
   {
     title: "안녕하세요 2",
     description: null,
-    deadline: null,
+    deadline: '2023-02-13',
     checked: false,
   },
   {
     title: "안녕하세요 3",
     description: null,
-    deadline: null,
+    deadline: '2023-02-17',
     checked: true,
   },
   {
@@ -247,6 +246,7 @@ const App = memo(() => {
                     index={i}
                     title={v.title}
                     checked={v.checked}
+                    deadline={v.deadline}
                     complete={onCompleteButtonClick}
                     reprocessing={onReprocessingButtonClick}
                     delete={onDeleteButtonClick}

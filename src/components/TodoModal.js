@@ -82,7 +82,7 @@ const TodoModal = memo(props => {
 			deadline: current.deadline.value ? current.deadline.value : null,
 			checked: props.nowTodo?.checked ? true : false
 		};
-
+		console.log(item);
 		props.setTodos(state => {
 			const temp = cloneDeep(state);
 			temp[props.index] = item;
