@@ -20,8 +20,8 @@ project<br/>
   │ ├ index.html<br/>
   │ ├ App.js<br/>
   │ └ components<br/>
-  │   ├ Todo.js<br/>
-  │   └ TodoModal.js<br/>
+  │     ├ Todo.js<br/>
+  │     └ TodoModal.js<br/>
   └ pakage.json, others...<br/>
   
 ## Skills
