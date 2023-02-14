@@ -265,6 +265,8 @@ const App = memo(() => {
         isOpen={isModalOpen}
         closeModal={closeModal}
         nowTodo={todos[nowTodoIndex]}
+        index={nowTodoIndex}
+        setTodos={setTodos}
       />
     </>
   );

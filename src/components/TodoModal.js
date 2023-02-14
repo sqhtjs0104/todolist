@@ -72,23 +72,22 @@ const Window = styled.div`
 `
 
 const TodoModal = memo(props => {
-	useEffect(() => {
-		const form = document.querySelector('#todoForm');
-		const nowTodo = props.nowTodo;
-	}, [props]);
-
 	const onTodoModify = useCallback(e => {
 		e.preventDefault();
 		const current = e.currentTarget;
 
 		const item = {
-			content: current.title.value,
-			descripton: current.description.value ? current.description.value : null,
+			title: current.title.value,
+			description: current.description.value ? current.description.value : null,
 			deadline: current.deadline.value ? current.deadline.value : null,
-			checked: props.checked
+			checked: props.nowTodo?.checked ? true : false
 		};
 
-		console.log(item);
+		props.setTodos(state => {
+			const temp = cloneDeep(state);
+			temp[props.index] = item;
+			return temp;
+		});
 
 		props.closeModal();
 	}, [props]);
