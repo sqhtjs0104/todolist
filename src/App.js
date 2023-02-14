@@ -126,11 +126,7 @@ const App = memo(() => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    const temp = [];
-    for (let i = test.length - 1; i >= 0; i--) {
-      temp.push(test[i]);
-    }
-    setTodos(temp);
+    setTodos(test);
   }, []);
   
   const [newTodoValue, setNewTodoValue] = useState(null);
@@ -159,6 +155,33 @@ const App = memo(() => {
     });
   }, [newTodoValue]);
 
+  const onCompleteButtonClick = useCallback(e => {
+    const index = e.currentTarget.dataset.index;
+    setTodos(state => {
+      const temp = cloneDeep(state);
+      temp[index].checked = true;
+      return temp;
+    });
+  }, []);
+
+  const onReprocessingButtonClick = useCallback(e => {
+    const index = e.currentTarget.dataset.index;
+    setTodos(state => {
+      const temp = cloneDeep(state);
+      temp[index].checked = false;
+      return temp;
+    });
+  }, []);
+
+  const onDeleteButtonClick = useCallback(e => {
+    const index = e.currentTarget.dataset.index;
+    setTodos(state => {
+      const temp = cloneDeep(state);
+      temp.splice(index, 1);
+      return temp;
+    });
+  }, []);
+
   return (
     <Main>
       <h1 className='title'>To Do List</h1>
@@ -174,7 +197,12 @@ const App = memo(() => {
               return (
                 <Todo
                   key={i}
+                  index={i}
                   content={v.content}
+                  checked={v.checked}
+                  complete={onCompleteButtonClick}
+                  reprocessing={onReprocessingButtonClick}
+                  delete={onDeleteButtonClick}
                 />
               )
             })

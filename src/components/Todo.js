@@ -24,16 +24,23 @@ const TodoItem = styled.li`
 		flex: 1;
 		padding: 6px 2px 6px 8px;
 		border-radius: 5px;
+		font-size: 14px;
+		font-weight: 600;
 
-		transition: all 0.4s;
+		transition: all 0.2s;
 
 		&:hover {
 			cursor: pointer;
-			background-color: #edf8e6;
+			background-color: #e5e5e5;
 		}
 
 		&:active {
-			background-color: #adb9ad;
+			background-color: #ccc;
+		}
+
+		&.todo__completed {
+			color: #aaa;
+			text-decoration-line: line-through;
 		}
 	}
 
@@ -41,6 +48,7 @@ const TodoItem = styled.li`
 		width: 25px;
 		height: 25px;
 		font-size: 12px;
+		font-weight: 600;
 		border: none;
 		border-radius: 50%;
 		margin-left: 5px;
@@ -58,10 +66,10 @@ const TodoItem = styled.li`
 		}
 
 		&:first-of-type {
-      background-color: #cdcdf5;
+      background-color: #98b1a3;
 
       &:active {
-        background-color: #7c7cf0;
+        background-color: #437e61;
       }
 		}
 
@@ -78,9 +86,20 @@ const TodoItem = styled.li`
 const Todo = memo(props => {
 	return (
 		<TodoItem>
-			<span>{props.content}</span>
-			<button>V</button>
-			<button>X</button>
+			{
+				props.checked ? (
+					<>
+						<span className='todo__completed'>{props.content}</span>
+						<button data-index={props.index} onClick={props.reprocessing}>R</button>
+					</>
+				) : (
+					<>
+						<span>{props.content}</span>
+						<button data-index={props.index} onClick={props.complete}>V</button>
+					</>
+				)
+			}
+			<button data-index={props.index} onClick={props.delete}>X</button>
 		</TodoItem>
 	);
 });
