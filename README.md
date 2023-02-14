@@ -13,16 +13,16 @@ Side project - To do list
 - dayjs
 
 ## Project structure
-project
-  ├ node_modules
-  ├ public
-  ├ src
-  │ ├ index.html
-  │ ├ App.js
-  │ └ components
-  │   ├ Todo.js
-  │   └ TodoModal.js
-  └ pakage.json, others...
+project<br/>
+  ├ node_modules<br/>
+  ├ public<br/>
+  ├ src<br/>
+  │ ├ index.html<br/>
+  │ ├ App.js<br/>
+  │ └ components<br/>
+  │   ├ Todo.js<br/>
+  │   └ TodoModal.js<br/>
+  └ pakage.json, others...<br/>
   
 ## Skills
 - HTML5/CSS3
