@@ -108,7 +108,7 @@ const Todo = memo(props => {
 				) : (
 					<>
 						{
-							dayjs().isAfter(dayjs(props.deadline).subtract(3, 'day')) ? (
+							props.deadline && dayjs().isAfter(dayjs(props.deadline).subtract(3, 'day')) ? (
 								dayjs().isAfter(props.deadline) ? (
 									<FontAwesomeIcon icon={faBell} color='#aaa' />
 								) : (
