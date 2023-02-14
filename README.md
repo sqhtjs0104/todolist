@@ -7,3 +7,6 @@ Side project - To do list
 - styled-component
 - sass
 - lodash
+- fontawesome
+- react-modal
+- dayjs

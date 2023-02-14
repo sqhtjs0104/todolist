@@ -1,8 +1,12 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { cloneDeep, remove, find } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import dayjs from 'dayjs';
 
 import Todo from './components/Todo';
+import TodoModal from './components/TodoModal';
 
 const Main = styled.div`
   display: flex;
@@ -15,6 +19,7 @@ const Main = styled.div`
   .title {
     font-size: 30px;
     margin: 0 auto 10px;
+    color: #313186;
   }
 
   .adding {
@@ -101,40 +106,57 @@ const Main = styled.div`
 
 const test = [
   {
-    content: "안녕하세요 1",
+    title: "안녕하세요 1",
+    description: null,
+    deadline: null,
     checked: false,
   },
   {
-    content: "안녕하세요 2",
+    title: "안녕하세요 2",
+    description: null,
+    deadline: null,
     checked: false,
   },
   {
-    content: "안녕하세요 3",
+    title: "안녕하세요 3",
+    description: null,
+    deadline: null,
     checked: true,
   },
   {
-    content: "안녕하세요 4",
+    title: "안녕하세요 4",
+    description: null,
+    deadline: null,
     checked: false,
   },
   {
-    content: "안녕하세요 5",
+    title: "안녕하세요 5",
+    description: null,
+    deadline: null,
     checked: true,
   },
 ]
 
 const App = memo(() => {
+  /** 최초 Todo list 정보 불러오기 */
+  // Todo 목록 저장할 state
   const [todos, setTodos] = useState([]);
-
+  
+  // Todo 적재(외부 데이터에서, 여기선 test)
   useEffect(() => {
     setTodos(test);
   }, []);
   
+  /** 새 item 입력 및 추가 처리 */
+  // 입력 input 내 값 저장할 state
   const [newTodoValue, setNewTodoValue] = useState(null);
 
+  // input change시 안의 value로 state 덮어씀
   const onNewTodoChange = useCallback(e => {
     setNewTodoValue(e.currentTarget.value);
   }, []);
 
+  // state 값이 바뀌면 새 값의 길이에 따라 추가 버튼 disabled 처리
   useEffect(() => {
     if (newTodoValue && newTodoValue.length > 0) {
       document.querySelector('.addBtn').disabled = false;
@@ -143,9 +165,10 @@ const App = memo(() => {
     }
   }, [newTodoValue])
 
+  // 추가하기 누를 시 해당 값 todo list state(Todos)에 저장
   const onAddTodoClick = useCallback(e => {
     const json = {
-      content: document.querySelector('#newTodo').value,
+      title: document.querySelector('#newTodo').value,
       checked: false
     };
     setTodos(state => {
@@ -153,8 +176,11 @@ const App = memo(() => {
       temp.unshift(json);
       return temp;
     });
+    document.querySelector('#newTodo').value = '';
   }, [newTodoValue]);
 
+  /** Todo item 버튼 클릭 처리 */
+  // 완료하기 누를시, Todos state의 해당 index item의 checked 값을 true로
   const onCompleteButtonClick = useCallback(e => {
     const index = e.currentTarget.dataset.index;
     setTodos(state => {
@@ -164,6 +190,7 @@ const App = memo(() => {
     });
   }, []);
 
+  // 다시 처리하기 누를 시 해당 index item의 checked false
   const onReprocessingButtonClick = useCallback(e => {
     const index = e.currentTarget.dataset.index;
     setTodos(state => {
@@ -173,6 +200,7 @@ const App = memo(() => {
     });
   }, []);
 
+  // 삭제하기 누를 시 해당 index item splice로 삭제
   const onDeleteButtonClick = useCallback(e => {
     const index = e.currentTarget.dataset.index;
     setTodos(state => {
@@ -182,34 +210,63 @@ const App = memo(() => {
     });
   }, []);
 
-  return (
-    <Main>
-      <h1 className='title'>To Do List</h1>
-      <div className='adding'> {/** 상단 제어 영역 */}
-        <input type="text" id='newTodo' onChange={onNewTodoChange} />
-        <button className='addBtn' onClick={onAddTodoClick}>Add</button>
-      </div>
+  /** 상세 Todo item madal 창 처리 */
+  // 창 열림 여부 저장할 state
+  const [isModalOpen, setIdModalOpen] = useState(false);
+  // 현재 상세 todo의 번호를 저장할 state
+  const [nowTodoIndex, setNowTodoIndex] = useState(null);
 
-      <div className='list'>
-        <ul className='processingList'> {/** 중단 현재 Todo list 영역 */}
-          {
-            todos.map((v, i) => {
-              return (
-                <Todo
-                  key={i}
-                  index={i}
-                  content={v.content}
-                  checked={v.checked}
-                  complete={onCompleteButtonClick}
-                  reprocessing={onReprocessingButtonClick}
-                  delete={onDeleteButtonClick}
-                />
-              )
-            })
-          }
-        </ul>
-      </div>
-    </Main>
+  // 모달을 열도록(state true로 변경) 할 함수
+  const openModal = useCallback(e => {
+    setIdModalOpen(true);
+  }, []);
+
+  // 모달을 닫도록(state false로 변경) 할 함수
+  const closeModal = useCallback(e => {
+    setIdModalOpen(false);
+  }, []);
+
+  return (
+    <>
+      <Main>
+        <h1 className='title'>
+          To Do&nbsp;<FontAwesomeIcon icon={faCheckSquare} />
+        </h1>
+        <div className='adding'> {/** 상단 제어 영역 */}
+          <input type="text" id='newTodo' onChange={onNewTodoChange} />
+          <button className='addBtn' onClick={onAddTodoClick}>Add</button>
+        </div>
+
+        <div className='list'>
+          <ul className='processingList'> {/** 중단 현재 Todo list 영역 */}
+            {
+              todos.map((v, i) => {
+                return (
+                  <Todo
+                    key={i}
+                    index={i}
+                    title={v.title}
+                    checked={v.checked}
+                    complete={onCompleteButtonClick}
+                    reprocessing={onReprocessingButtonClick}
+                    delete={onDeleteButtonClick}
+                    openModal={openModal}
+                    setNowTodoIndex={setNowTodoIndex}
+                  />
+                )
+              })
+            }
+          </ul>
+        </div>
+      </Main>
+
+      {/* 각 Todo item 클릭 시 나올 상세보기 modal */}
+      <TodoModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        nowTodo={todos[nowTodoIndex]}
+      />
+    </>
   );
 });
 

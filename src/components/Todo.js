@@ -1,5 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from 'styled-components';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faArrowRotateLeft, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const TodoItem = styled.li`
 	display: flex;
@@ -27,7 +30,7 @@ const TodoItem = styled.li`
 		font-size: 14px;
 		font-weight: 600;
 
-		transition: all 0.2s;
+		transition: all 0.6s;
 
 		&:hover {
 			cursor: pointer;
@@ -84,22 +87,33 @@ const TodoItem = styled.li`
 `
 
 const Todo = memo(props => {
+	const onTodoClick = useCallback(e => {
+		props.setNowTodoIndex(e.currentTarget.dataset.index);
+		props.openModal();
+	}, [props]);
+
 	return (
 		<TodoItem>
 			{
 				props.checked ? (
 					<>
-						<span className='todo__completed'>{props.content}</span>
-						<button data-index={props.index} onClick={props.reprocessing}>R</button>
+						<span className='todo__completed' data-index={props.index} onClick={onTodoClick}>{props.title}</span>
+						<button data-index={props.index} onClick={props.reprocessing}>
+							<FontAwesomeIcon icon={faArrowRotateLeft} />
+						</button>
 					</>
 				) : (
 					<>
-						<span>{props.content}</span>
-						<button data-index={props.index} onClick={props.complete}>V</button>
+						<span data-index={props.index} onClick={onTodoClick}>{props.title}</span>
+						<button data-index={props.index} onClick={props.complete}>
+							<FontAwesomeIcon icon={faCheck} />
+						</button>
 					</>
 				)
 			}
-			<button data-index={props.index} onClick={props.delete}>X</button>
+			<button data-index={props.index} onClick={props.delete}>
+				<FontAwesomeIcon icon={faXmark} />
+			</button>
 		</TodoItem>
 	);
 });
