@@ -43,12 +43,16 @@ const Main = styled.div`
       padding: 8px 10px;
       font-weight: 600;
 
-      &:hover {
+      &:disabled {
+        background-color: #ccc;
+      }
+
+      &:not(:disabled):hover {
         cursor: pointer;
         scale: 1.1;
       }
 
-      &:active {
+      &:not(:disabled):active {
         scale: 1;
         background-color: #313186;
       }
@@ -140,12 +144,24 @@ const App = memo(() => {
     setNewTodoValue(e.currentTarget.value);
   }, []);
 
+  useEffect(() => {
+    if (newTodoValue && newTodoValue.length > 0) {
+      document.querySelector('.addBtn').disabled = false;
+    } else {
+      document.querySelector('.addBtn').disabled = true;
+    }
+  }, [newTodoValue])
+
+  const onAddTodoClick = useCallback(e => {
+    
+  }, [newTodoValue]);
+
   return (
     <Main>
       <h1 className='title'>To Do List</h1>
       <div className='adding'> {/** 상단 제어 영역 */}
         <input type="text" id='newTodo' onChange={onNewTodoChange} />
-        <button>Add</button>
+        <button className='addBtn' onClick={onAddTodoClick}>Add</button>
       </div>
 
       <div className='list'>
