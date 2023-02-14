@@ -141,9 +141,13 @@ const App = memo(() => {
   // Todo 목록 저장할 state
   const [todos, setTodos] = useState([]);
   
-  // Todo 적재(외부 데이터에서, 여기선 test)
+  // localStorage에서 데이터 state로 적재
   useEffect(() => {
-    setTodos(test);
+    const data = localStorage.getItem('TodoList');
+    if (!data) {
+      return
+    }
+    setTodos(JSON.parse(data));
   }, []);
   
   /** 새 item 입력 및 추가 처리 */
@@ -168,6 +172,8 @@ const App = memo(() => {
   const onAddTodoClick = useCallback(e => {
     const json = {
       title: document.querySelector('#newTodo').value,
+      description: null,
+      deadline: null,
       checked: false
     };
     setTodos(state => {
@@ -224,6 +230,11 @@ const App = memo(() => {
   const closeModal = useCallback(e => {
     setIdModalOpen(false);
   }, []);
+
+  /** 모든 todo 변화 때마다 localStorage 최신화 */
+  useEffect(() => {
+    localStorage.setItem('TodoList', JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <>
