@@ -101,27 +101,22 @@ const Main = styled.div`
 
 const test = [
   {
-    id: 1,
     content: "안녕하세요 1",
     checked: false,
   },
   {
-    id: 2,
     content: "안녕하세요 2",
     checked: false,
   },
   {
-    id: 3,
     content: "안녕하세요 3",
     checked: true,
   },
   {
-    id: 4,
     content: "안녕하세요 4",
     checked: false,
   },
   {
-    id: 5,
     content: "안녕하세요 5",
     checked: true,
   },
@@ -153,7 +148,15 @@ const App = memo(() => {
   }, [newTodoValue])
 
   const onAddTodoClick = useCallback(e => {
-    
+    const json = {
+      content: document.querySelector('#newTodo').value,
+      checked: false
+    };
+    setTodos(state => {
+      const temp = cloneDeep(state);
+      temp.unshift(json);
+      return temp;
+    });
   }, [newTodoValue]);
 
   return (
@@ -172,7 +175,6 @@ const App = memo(() => {
                 <Todo
                   key={i}
                   content={v.content}
-                  id={v.id}
                 />
               )
             })
