@@ -103,39 +103,6 @@ const Main = styled.div`
   }
 `;
 
-const test = [
-  {
-    title: "안녕하세요 1",
-    description: null,
-    deadline: null,
-    checked: false,
-  },
-  {
-    title: "안녕하세요 2",
-    description: null,
-    deadline: '2023-02-13',
-    checked: false,
-  },
-  {
-    title: "안녕하세요 3",
-    description: null,
-    deadline: '2023-02-17',
-    checked: true,
-  },
-  {
-    title: "안녕하세요 4",
-    description: null,
-    deadline: null,
-    checked: false,
-  },
-  {
-    title: "안녕하세요 5",
-    description: null,
-    deadline: null,
-    checked: true,
-  },
-]
-
 const App = memo(() => {
   /** 최초 Todo list 정보 불러오기 */
   // Todo 목록 저장할 state
