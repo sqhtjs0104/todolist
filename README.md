@@ -11,18 +11,6 @@ Side project - To do list
 - fontawesome
 - react-modal
 - dayjs
-
-## Project structure
-project<br/>
-  ├ node_modules<br/>
-  ├ public<br/>
-  ├ src<br/>
-  │ ├ index.html<br/>
-  │ ├ App.js<br/>
-  │ └ components<br/>
-  │     ├ Todo.js<br/>
-  │     └ TodoModal.js<br/>
-  └ pakage.json, others...<br/>
   
 ## Skills
 - HTML5/CSS3
