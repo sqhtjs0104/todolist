@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faArrowRotateLeft, faXmark, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faArrowRotateLeft, faXmark, faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 
 const TodoItem = styled.li`
@@ -110,7 +110,7 @@ const Todo = memo(props => {
 						{
 							props.deadline && dayjs().isAfter(dayjs(props.deadline).subtract(3, 'day')) ? (
 								dayjs().isAfter(props.deadline) ? (
-									<FontAwesomeIcon icon={faBell} color='#aaa' />
+									<FontAwesomeIcon icon={faBellSlash} color='#aaa' />
 								) : (
 									<FontAwesomeIcon icon={faBell} shake className='shakeBell' color='#f38b8b' />
 								)
