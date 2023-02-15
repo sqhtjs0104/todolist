@@ -28,6 +28,6 @@ localStorage를 활용해 브라우저가 종료되어도 목록이 유지됩니
 
 ## Screenshot
 ![IMG](./capture/screenshot.PNG)
-![IMG](./capture/1.PNG)
-![IMG](./capture/2.PNG)
-![IMG](./capture/3.PNG)
+![IMG](./capture/1.png)
+![IMG](./capture/2.png)
+![IMG](./capture/3.png)
