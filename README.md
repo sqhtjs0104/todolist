@@ -8,7 +8,6 @@ Example site link: https://sqhtjs0104.github.io/todolist/
 
 ## Libraries
 - styled-component
-- sass
 - lodash
 - fontawesome
 - react-modal

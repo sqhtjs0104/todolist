@@ -45,6 +45,10 @@ const TodoItem = styled.li`
 			color: #aaa;
 			text-decoration-line: line-through;
 		}
+		
+		@media screen and (max-width: 450px) {
+      font-size: 20px;
+    }
 	}
 
 	button {
@@ -83,6 +87,12 @@ const TodoItem = styled.li`
       	background-color: #eb5858;
       }
 		}
+
+		@media screen and (max-width: 450px) {
+			width: 30px;
+			height: 30px;
+      font-size: 14px;
+    }
 	}
 
 	.shakeBell {

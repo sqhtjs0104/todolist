@@ -19,6 +19,10 @@ const Main = styled.div`
     font-size: 30px;
     margin: 0 auto 10px;
     color: #313186;
+
+    @media screen and (max-width: 450px) {
+      margin: 20px auto 10px;
+    }
   }
 
   .adding {
@@ -27,6 +31,7 @@ const Main = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     box-sizing: border-box;
+    position: relative;
 
     * {
       border-radius: 5px;
@@ -60,6 +65,13 @@ const Main = styled.div`
         scale: 1;
         background-color: #313186;
       }
+    }
+
+    @media screen and (max-width: 450px) {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
     }
   }
 

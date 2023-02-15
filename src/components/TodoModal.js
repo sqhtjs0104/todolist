@@ -8,12 +8,12 @@ import { cloneDeep } from 'lodash';
 const defaultModalStyle = {
 	content: {
 		top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
 		margin: '0',
 		padding: '0',
-    transform: 'translate(-50%, -50%)'
+		transform: 'translate(-50%, -50%)'
 	}
 }
 
@@ -115,7 +115,7 @@ const TodoModal = memo(props => {
 					<textarea
 						rows='5'
 						name='description'
-						placeholder='Indert description of Todo'
+						placeholder='Insert description of Todo'
 						defaultValue={props.nowTodo?.description ? props.nowTodo.description : ''}
 					/>
 					<h3>Deadline</h3>
