@@ -27,4 +27,7 @@ Example site link: https://sqhtjs0104.github.io/todolist/
 localStorage를 활용해 브라우저가 종료되어도 목록이 유지됩니다.
 
 ## Screenshot
-![IMG](./ss.PNG)
+![IMG](./capture/screenshot.PNG)
+![IMG](./capture/1.PNG)
+![IMG](./capture/2.PNG)
+![IMG](./capture/3.PNG)

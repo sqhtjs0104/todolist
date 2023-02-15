@@ -68,10 +68,14 @@ const Main = styled.div`
     }
 
     @media screen and (max-width: 450px) {
-      position: absolute;
-      bottom: 30px;
+      position: fixed;
+      bottom: 0;
       left: 0;
       width: 100%;
+      height: 70px;
+      padding-bottom: 20px;
+      background-color: #fff;
+      border-top: 1px solid #aaa;
     }
   }
 
@@ -83,6 +87,7 @@ const Main = styled.div`
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    overflow-y: hidden;
 
     ul {
       margin: 0;
@@ -110,6 +115,10 @@ const Main = styled.div`
 
       li {
         margin-bottom: 5px;
+      }
+
+      @media screen and (max-width: 450px) {
+        padding-bottom: 50px;
       }
     }
   }
