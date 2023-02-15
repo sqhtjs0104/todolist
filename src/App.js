@@ -69,7 +69,7 @@ const Main = styled.div`
 
     @media screen and (max-width: 450px) {
       position: absolute;
-      bottom: 10px;
+      bottom: 30px;
       left: 0;
       width: 100%;
     }
