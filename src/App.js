@@ -154,7 +154,7 @@ const App = memo(() => {
     } else {
       document.querySelector('.addBtn').disabled = true;
     }
-  }, [newTodoValue])
+  }, [newTodoValue]);
 
   // 추가하기 누를 시 해당 값 todo list state(Todos)에 저장
   const onAddTodoClick = useCallback(e => {
